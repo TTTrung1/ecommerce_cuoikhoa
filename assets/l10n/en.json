@@ -1,0 +1,10 @@
+{
+  "appTitle": "Flutter E-commerce",
+  "showAll": "Show All",
+  "search": "Search",
+  "searchField": "Search for products",
+  "darkMode":"Dark mode",
+  "language":"Language",
+  "changePass":"Change password",
+  "logOut":"Log out"
+}
