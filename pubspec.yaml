@@ -48,6 +48,7 @@ dependencies:
   easy_localization: ^3.0.3
   firebase_core: ^2.23.0
   firebase_auth: ^4.14.1
+  cloud_firestore: ^4.13.2
   equatable: ^2.0.5
   email_validator: ^2.1.17
 

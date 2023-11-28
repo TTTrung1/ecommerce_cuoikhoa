@@ -13,11 +13,9 @@ class CarouselSliderItem extends StatelessWidget {
     return CarouselSlider(
         items: listProducts.map((e) {
           return GestureDetector(
-            child: Hero(
-                tag: e.id!,
-                child: FadeInImage(
-                    placeholder: const AssetImage('assets/Plink.png'),
-                    image: NetworkImage(e.image!))),
+            child: FadeInImage(
+                placeholder: const AssetImage('assets/Plink.png'),
+                image: NetworkImage(e.image!)),
             onTap: () {
               showModalBottomSheet(
                   context: context,

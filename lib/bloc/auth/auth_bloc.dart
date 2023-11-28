@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(UnauthenticatedState());
     }
     else{
-      emit(AuthenticatedState());
+      emit(SignInSuccessState());
     }
   }
 
@@ -37,13 +37,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       User? user = await authRepository.signUp(email: event.email, password: event.password);
       if(user != null)
       {
-        emit(AuthSuccess());
-      }
-      else{
-        emit(AuthError());
+        emit(SignUpSuccessState());
       }
     } catch (e) {
-      emit(AuthError());
+      emit(SignUpFailState(message: e.toString()));
     }
   }
 
@@ -54,20 +51,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       User? user = await authRepository.signIn(email: event.email, password: event.password);
       if(user != null)
       {
-        emit(AuthenticatedState());
+        emit(SignInSuccessState());
         setAuth(true);
       }
-      else{
-        emit(AuthError());
-      }
     } catch (e) {
-      emit(AuthError());
+      emit(SignInFailState(message: e.toString()));
     }
   }
   void _onLogOut(LogOutRequestedEvent event,Emitter<AuthState> emit) async{
-    emit(AuthLoadingState());
     authRepository.logOut();
     setAuth(false);
-    emit(UnauthenticatedState());
+    emit(LogOutSuccessState());
   }
 }

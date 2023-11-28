@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecommerce_cuoikhoa/screen/auth/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,15 +15,7 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  bool isDark = false;
-
-  FirebaseAuth auth = FirebaseAuth.instance;
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-
-  }
+  final auth = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +38,11 @@ class _UserScreenState extends State<UserScreen> {
                 width: 10,
               ),
               BlocConsumer<AuthBloc, AuthState>(
-                listener: (context, state) {
-                },
+                listener: (context, state) {},
                 builder: (context, state) {
-                  if(state is AuthenticatedState){
-                    print(auth.currentUser?.uid);
+                  if (state is SignInSuccessState) {
                     return Center(
-                      child: Text(auth.currentUser!.email!,
+                      child: Text(auth!.email!,
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 16)),
@@ -65,7 +56,9 @@ class _UserScreenState extends State<UserScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 5,),
+              const SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -115,8 +108,9 @@ class _UserScreenState extends State<UserScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     'changePass',
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.primary,fontSize: 16),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 16),
                   ).tr(),
                 ),
                 onTap: () {},
@@ -124,10 +118,12 @@ class _UserScreenState extends State<UserScreen> {
               const Spacer(),
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
-                  showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator(),));
-                  Navigator.of(context).pop();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      (route) => false);
                 },
-                listenWhen: (previous, current) => current is AuthLoadingState,
+                listenWhen: (previous, current) => current is LogOutSuccessState,
                 builder: (context, state) {
                   return InkWell(
                     onTap: () {

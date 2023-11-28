@@ -67,9 +67,6 @@ class _ProductDetailState extends State<ProductDetail> {
                                   .primary,
                             ),
                           ),
-                          // Icon(Icons.shopping_cart,
-                          //     size: 16,
-                          //     color: Theme.of(context).colorScheme.primary),
                         ],
                       ),
                     ),
@@ -117,7 +114,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              AddToCart()
+                              AddToCart(context: context,)
                             ],
                           ),
                         )),
