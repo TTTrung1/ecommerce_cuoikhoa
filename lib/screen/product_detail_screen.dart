@@ -114,7 +114,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              AddToCart(context: context,)
+                              AddToCart(product: state.product)
                             ],
                           ),
                         )),

@@ -5,6 +5,7 @@ import 'package:ecommerce_cuoikhoa/bloc/home/home_bloc.dart';
 import 'package:ecommerce_cuoikhoa/constant/constant.dart';
 import 'package:ecommerce_cuoikhoa/firebase_options.dart';
 import 'package:ecommerce_cuoikhoa/repository/auth_repository.dart';
+import 'package:ecommerce_cuoikhoa/repository/cart_repository.dart';
 import 'package:ecommerce_cuoikhoa/screen/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,8 +31,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => AuthRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => AuthRepository()),
+        RepositoryProvider(create: (context) => CartRepository()),
+      ],
       child: MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -45,21 +49,24 @@ class MyApp extends StatelessWidget {
                     authRepository:
                         RepositoryProvider.of<AuthRepository>(context))
                   ..add(AuthStartedEvent())),
-            BlocProvider(create: (context) => CartBloc()..add(CartStartedEvent())),
+            BlocProvider(
+                create: (context) => CartBloc(
+                    cartRepository:
+                        RepositoryProvider.of<CartRepository>(context))
+                  ..add(CartStartedEvent())),
           ],
           child: BlocBuilder<ThemeBloc, ThemeMode>(
             builder: (context, theme) {
               return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Flutter E-commerce',
-                theme: lightTheme,
-                darkTheme: darkTheme,
-                themeMode: theme,
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                locale: context.locale,
-                home: AuthScreen()
-              );
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter E-commerce',
+                  theme: lightTheme,
+                  darkTheme: darkTheme,
+                  themeMode: theme,
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  home: AuthScreen());
             },
           )),
     );

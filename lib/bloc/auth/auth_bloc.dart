@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onInit(AuthStartedEvent event, Emitter<AuthState> emit)async{
+    print('auth');
     final bool auth = await isAuth();
     if(!auth){
       emit(UnauthenticatedState());

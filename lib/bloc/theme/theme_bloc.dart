@@ -13,6 +13,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeMode> {
   }
 
   Future<void> _initTheme(ThemeEvent event,Emitter<ThemeMode> emit)async{
+    print('theme');
     final bool darkTheme = await isDark();
     if(darkTheme){
       emit(ThemeMode.dark);

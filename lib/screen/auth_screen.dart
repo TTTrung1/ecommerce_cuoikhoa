@@ -9,13 +9,12 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context,snapshot)
-    {
-      if(snapshot.hasData && snapshot.data != null){
-        return const MyHomePage();
-      }
-      return const SignInScreen();
-    });
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return const MyHomePage();
+          }
+          return const SignInScreen();
+        });
   }
 }

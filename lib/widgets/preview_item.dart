@@ -20,7 +20,7 @@ class PreviewItem extends StatelessWidget {
               Image.network(product.image!),
               Text(product.title!,style: Theme.of(context).textTheme.displayMedium,),
               Text(product.description!,style: Theme.of(context).textTheme.headlineMedium),
-              AddToCart(context: context,)
+              AddToCart(product: product)
             ],
           ),
         ),

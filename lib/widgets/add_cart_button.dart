@@ -1,11 +1,13 @@
+import 'package:ecommerce_cuoikhoa/model/cart_item.dart';
+import 'package:ecommerce_cuoikhoa/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/cart/cart_bloc.dart';
 
 class AddToCart extends StatelessWidget {
-  const AddToCart({super.key, required this.context});
-  final BuildContext context;
+  const AddToCart({super.key, required this.product});
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,9 @@ class AddToCart extends StatelessWidget {
             ),
             child: TextButton(
               onPressed: () {
-                context.read<CartBloc>().add(CartAddedEvent());
+                context.read<CartBloc>().add(CartAddedEvent(
+                  product: product
+                ));
                 Navigator.of(context).pop();
 
               }, child: const Text('Add to cart',

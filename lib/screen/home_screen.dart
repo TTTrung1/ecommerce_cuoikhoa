@@ -108,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           );
                         },
-                        separatorBuilder: (ctx, i) => const Divider(
+                        separatorBuilder: (ctx, i) => Divider(
+                          color: Theme.of(context).colorScheme.background,
                               height: 10,
                             ),
                         itemCount: categories.length),

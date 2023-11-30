@@ -7,7 +7,10 @@ class CartInitial extends CartState {}
 
 class CartLoading extends CartState {}
 
-class CartLoadSuccessState extends CartState {}
+class CartLoadSuccessState extends CartState {
+  final List<CartItem> listItem;
+  CartLoadSuccessState(this.listItem);
+}
 
 class CartActionState extends CartState {}
 
