@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => CartBloc(
                     cartRepository:
                         RepositoryProvider.of<CartRepository>(context))
-                  ..add(CartStartedEvent())),
+                  ),
           ],
           child: BlocBuilder<ThemeBloc, ThemeMode>(
             builder: (context, theme) {

@@ -1,25 +1,39 @@
 part of 'cart_bloc.dart';
 
-@immutable
-abstract class CartState {}
+// @immutable
+//  class CartState {
+//    List<CartItem> listItem=[];
+//    double totalCost=0;
+// }
+//
+// class CartInitial extends CartState {}
+//
+// class CartLoading extends CartState {}
+//
+// class CartLoadSuccessState extends CartState {
+// }
+//
+// class CartActionState extends CartState {}
+//
+//
+// class CartAddSuccessState extends CartActionState {}
+//
+//
+// class CartRemoveSuccessState extends CartActionState {}
+//
+//
+// class CartDeleteSuccessState extends CartActionState {}
+//
+// class CartErrorState extends CartState {}
 
-class CartInitial extends CartState {}
 
-class CartLoading extends CartState {}
+@freezed
+class CartState with _$CartState {
+  const factory CartState({
+    @Default([]) List<CartItem> listItem,
+    @Default(0) double totalCost,
+    @Default(false) bool loading,
+    @Default(false) bool clicked
+}) = _CartState;
 
-class CartLoadSuccessState extends CartState {
-  final List<CartItem> listItem;
-  CartLoadSuccessState(this.listItem);
 }
-
-class CartActionState extends CartState {}
-
-class CartAddFailState extends CartActionState {}
-
-class CartAddSuccessState extends CartActionState {}
-
-class CartRemoveFailState extends CartActionState {}
-
-class CartRemoveSuccessState extends CartActionState {}
-
-class CartErrorState extends CartState {}

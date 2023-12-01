@@ -62,7 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
             BlocConsumer<SearchBloc, SearchState>(
                 listener: (context, state) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProductDetail()));
+                      MaterialPageRoute(builder: (context) => const ProductDetail()));
                 },
                 listenWhen: (previous, current) =>
                     current is SearchProductPressState,
@@ -77,7 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     return Expanded(
                       child: ListView.separated(
                           itemCount: stateSearch.listP.length,
-                          separatorBuilder: (ctx, index) => const Divider(),
+                          separatorBuilder: (ctx, index) => Divider(color: Theme.of(context).colorScheme.background,),
                           itemBuilder: (ctx, index) =>
                               SearchItem(product: stateSearch.listP[index])),
                     );

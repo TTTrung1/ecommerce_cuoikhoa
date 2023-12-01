@@ -20,7 +20,7 @@ class ProductsByCategory extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 8,
-                    mainAxisSpacing: 100),
+                    mainAxisSpacing: 20),
                 itemCount: products.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
@@ -37,17 +37,29 @@ class ProductsByCategory extends StatelessWidget {
                             builder: (context) =>
                                 PreviewItem(product: products[index]));
                       },
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20)),
-                        child: FadeInImage(
-                          placeholder: const AssetImage('assets/Plink.png'),
-                          image: NetworkImage(
-                            products[index].image!,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20)),
+                            child: FadeInImage(
+                              placeholder: const AssetImage('assets/Plink.png'),
+                              image: NetworkImage(
+                                products[index].image!,
+                              ),
+                              fit: BoxFit.cover,
+                              height: 150,
+                              width: double.infinity,
+                            ),
                           ),
-                          fit: BoxFit.cover,
-                        ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0,right: 4,left: 4),
+                            child: Text(products[index].title!,overflow: TextOverflow.ellipsis,),
+                          )
+                        ],
                       ),
                     ),
                   );

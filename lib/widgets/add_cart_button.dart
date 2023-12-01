@@ -13,7 +13,7 @@ class AddToCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
-        if(state is CartAddSuccessState){
+        if(state.clicked == true){
           print('listener: $state');
           ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
           msg.showSnackBar(const SnackBar(
@@ -22,7 +22,7 @@ class AddToCart extends StatelessWidget {
           ));
         }
       },
-      listenWhen: (previous, current) => current is CartActionState,
+      listenWhen: (previous, current) => current.clicked == true,
       builder: (context, state) {
         print(state);
         return Center(
@@ -39,7 +39,7 @@ class AddToCart extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 context.read<CartBloc>().add(CartAddedEvent(
-                  product: product
+                  item: CartItem(id: product.id,title: product.title,price: product.price,category: product.category,image: product.image,quantity: 1)
                 ));
                 Navigator.of(context).pop();
 

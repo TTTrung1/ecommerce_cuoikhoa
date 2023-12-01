@@ -6,9 +6,18 @@ abstract class CartEvent {}
 class CartStartedEvent extends CartEvent{}
 
 class CartAddedEvent extends CartEvent{
-  final Product product;
-  CartAddedEvent({required this.product});
+  final CartItem item;
+  CartAddedEvent({required this.item});
 }
 
-class CartRemovedEvent extends CartEvent{}
+class CartRemovedEvent extends CartEvent{
+  final CartItem item;
+  CartRemovedEvent({required this.item});
+}
+
+class CartDeletedEvent extends CartEvent{
+  final CartItem item;
+  CartDeletedEvent({required this.item});
+}
+
 
