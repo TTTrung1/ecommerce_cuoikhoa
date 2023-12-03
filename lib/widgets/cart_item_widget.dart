@@ -8,7 +8,7 @@ import '../model/cart_item.dart';
 class CartItemWidget extends StatelessWidget {
   CartItemWidget({super.key, required this.item});
   final CartItem item;
-  CartRepository cartRepository = CartRepository();
+  final CartRepository cartRepository = CartRepository();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,11 +31,11 @@ class CartItemWidget extends StatelessWidget {
                   children: [
                     IconButton(onPressed: (){
                       context.read<CartBloc>().add(CartRemovedEvent(item: item));
-                    }, icon: Icon(Icons.remove)),
+                    }, icon: const Icon(Icons.remove)),
                     Text(item.quantity.toString()),
                     IconButton(onPressed: () {
                       context.read<CartBloc>().add(CartAddedEvent(item: item));
-                    }, icon: Icon(Icons.add))
+                    }, icon: const Icon(Icons.add))
                   ],
                 )
               ],

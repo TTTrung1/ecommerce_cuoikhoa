@@ -1,4 +1,3 @@
-import 'package:ecommerce_cuoikhoa/screen/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,27 +80,6 @@ class SearchItem extends StatelessWidget {
                                           Theme.of(context).colorScheme.primary,
                                     )),
                               ],
-                            ),
-                            GestureDetector(
-                              child: IconButton(
-                                splashColor:
-                                    Theme.of(context).colorScheme.primary,
-                                tooltip: 'Add to cart',
-                                onPressed: () {
-                                  final ScaffoldMessengerState addToCartMsg =
-                                      ScaffoldMessenger.of(context);
-                                  addToCartMsg.showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Product added successfully'),
-                                      duration: Duration(seconds: 2),
-                                    ),
-                                  );
-                                },
-                                icon:
-                                    const Icon(Icons.add_shopping_cart_rounded),
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
                             ),
                           ],
                         ),

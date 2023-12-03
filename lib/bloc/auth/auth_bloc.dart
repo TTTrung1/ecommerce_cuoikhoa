@@ -5,7 +5,6 @@ import 'package:ecommerce_cuoikhoa/repository/auth_repository.dart';
 
 import 'auth_helper.dart';
 
-
 part 'auth_event.dart';
 
 part 'auth_state.dart';
@@ -18,15 +17,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignUpRequestedEvent>(_onSignUp);
     on<SignInRequestedEvent>(_onSignIn);
     on<LogOutRequestedEvent>(_onLogOut);
+    on<GoogleSignInEvent>(_onGoogleSignIn);
   }
 
-  void _onInit(AuthStartedEvent event, Emitter<AuthState> emit)async{
+  void _onInit(AuthStartedEvent event, Emitter<AuthState> emit) async {
     print('auth');
     final bool auth = await isAuth();
-    if(!auth){
+    if (!auth) {
       emit(UnauthenticatedState());
-    }
-    else{
+    } else {
       emit(SignInSuccessState());
     }
   }
@@ -35,9 +34,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SignUpRequestedEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoadingState());
     try {
-      User? user = await authRepository.signUp(email: event.email, password: event.password);
-      if(user != null)
-      {
+      User? user = await authRepository.signUp(
+          email: event.email, password: event.password);
+      if (user != null) {
         emit(SignUpSuccessState());
       }
     } catch (e) {
@@ -49,9 +48,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SignInRequestedEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoadingState());
     try {
-      User? user = await authRepository.signIn(email: event.email, password: event.password);
-      if(user != null)
-      {
+      User? user = await authRepository.signIn(
+          email: event.email, password: event.password);
+      if (user != null) {
         emit(SignInSuccessState());
         setAuth(true);
       }
@@ -59,7 +58,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(SignInFailState(message: e.toString()));
     }
   }
-  void _onLogOut(LogOutRequestedEvent event,Emitter<AuthState> emit) async{
+
+  Future<void> _onGoogleSignIn(
+      GoogleSignInEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoadingState());
+    try {
+      UserCredential user = await authRepository.signInWithGoogle();
+      if(user.user != null){
+        emit(SignInSuccessState());
+        setAuth(true);
+      }
+    } catch (e) {
+      emit(SignInFailState(message: e.toString()));
+    }
+  }
+
+  void _onLogOut(LogOutRequestedEvent event, Emitter<AuthState> emit) async {
     authRepository.logOut();
     setAuth(false);
     emit(LogOutSuccessState());

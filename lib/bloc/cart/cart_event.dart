@@ -15,9 +15,6 @@ class CartRemovedEvent extends CartEvent{
   CartRemovedEvent({required this.item});
 }
 
-class CartDeletedEvent extends CartEvent{
-  final CartItem item;
-  CartDeletedEvent({required this.item});
-}
+
 
 

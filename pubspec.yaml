@@ -52,6 +52,7 @@ dependencies:
   equatable: ^2.0.5
   email_validator: ^2.1.17
   freezed_annotation: ^2.4.1
+  google_sign_in: ^6.1.6
 
 
 dev_dependencies:

@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../model/cart_item.dart';
 
 class CartRepository {
-  final _cart = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance.currentUser;
 
   List<CartItem> _items = [];
@@ -15,8 +14,7 @@ class CartRepository {
 
   Future<void> addToCart(CartItem item) async {
     await fetchFromFirebase();
-    int existingIndex =
-        _items.indexWhere((element) => element.id == item.id);
+    int existingIndex = _items.indexWhere((element) => element.id == item.id);
     if (existingIndex != -1) {
       _items.elementAt(existingIndex).quantity =
           (_items.elementAt(existingIndex).quantity! + 1);
@@ -52,7 +50,6 @@ class CartRepository {
         await userProductCollection.doc('items').get();
     if (snapshot.exists) {
       final data = snapshot['products'];
-      print('${data.runtimeType}');
       _items.clear();
       data.forEach((element) {
         _items.add(CartItem(
@@ -90,26 +87,21 @@ class CartRepository {
     await fetchFromFirebase();
     try {
       final uid = _auth?.uid;
-      assert(item.quantity! > 0, 'Can not be reduced to 0!');
       final int existingIndex =
           _items.indexWhere((element) => element.id == item.id);
-      print(existingIndex);
-      if (existingIndex != -1) {
-
-        _items[existingIndex].quantity = _items[existingIndex].quantity!-1;
-        List<Map<String, dynamic>> cartItemList =
-            _items.map((item) => item.toMapWithoutNulls()).toList();
-        CollectionReference userProductCollection = FirebaseFirestore.instance
-            .collection('cart')
-            .doc(uid)
-            .collection('products');
-
-        await userProductCollection
-            .doc('items')
-            .set({'products': cartItemList});
+      if (existingIndex != -1 && item.quantity! > 1) {
+        _items[existingIndex].quantity = _items[existingIndex].quantity! - 1;
+      } else if (existingIndex != -1 && item.quantity == 1) {
+        _items.removeAt(existingIndex);
       }
+      List<Map<String, dynamic>> cartItemList =
+          _items.map((item) => item.toMapWithoutNulls()).toList();
+      CollectionReference userProductCollection = FirebaseFirestore.instance
+          .collection('cart')
+          .doc(uid)
+          .collection('products');
+      await userProductCollection.doc('items').set({'products': cartItemList});
     } catch (e) {
-      print('Error updating quantity: $e');
       throw Exception('Failed to update quantity');
     }
   }

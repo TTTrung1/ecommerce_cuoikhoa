@@ -16,11 +16,10 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository cartRepository;
 
-  CartBloc({required this.cartRepository}) : super(CartState()) {
+  CartBloc({required this.cartRepository}) : super(const CartState()) {
     on<CartStartedEvent>(_onStart);
     on<CartAddedEvent>(_onAdded);
     on<CartRemovedEvent>(_onRemoved);
-    on<CartDeletedEvent>(_onDeleted);
   }
 
   Future<void> _onStart(CartStartedEvent event, Emitter<CartState> emit) async {
@@ -28,13 +27,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(state.copyWith(loading: true));
     try {
       await cartRepository.fetchFromFirebase();
-      print("fetched");
       final totalCost = await cartRepository.totalCost();
       final listItem = cartRepository.listItem;
-      print(listItem.length);
-      // final state = CartLoadSuccessState();
-      // state.listItem = listItem;
-      // state.totalCost = totalCost;
       emit(state.copyWith(
         listItem: listItem,
         totalCost: totalCost,
@@ -52,7 +46,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final totalCost = await cartRepository.totalCost();
       final listItem = cartRepository.listItem;
       emit(state.copyWith(
-          listItem: listItem, totalCost: totalCost, loading: false));
+          listItem: listItem, totalCost: totalCost, loading: false,clicked: true));
+      print('state in bloc: $state');
+      emit(state.copyWith(clicked: false));
     } catch (e) {
       emit(state.copyWith(loading: false));
     }
@@ -72,12 +68,4 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _onDeleted(CartDeletedEvent event, Emitter<CartState> emit) {
-    emit(state.copyWith(loading: true));
-    try {
-      emit(state.copyWith(loading: false));
-    } catch (e) {
-      emit(state.copyWith(loading: false));
-    }
-  }
 }

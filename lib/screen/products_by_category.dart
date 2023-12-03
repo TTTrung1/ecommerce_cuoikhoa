@@ -57,7 +57,7 @@ class ProductsByCategory extends StatelessWidget {
 
                           Padding(
                             padding: const EdgeInsets.only(top: 4.0,right: 4,left: 4),
-                            child: Text(products[index].title!,overflow: TextOverflow.ellipsis,),
+                            child: Text(products[index].title!,overflow: TextOverflow.ellipsis,style: TextStyle(color: Theme.of(context).colorScheme.primary),),
                           )
                         ],
                       ),

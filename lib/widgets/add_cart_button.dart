@@ -24,7 +24,6 @@ class AddToCart extends StatelessWidget {
       },
       listenWhen: (previous, current) => current.clicked == true,
       builder: (context, state) {
-        print(state);
         return Center(
           child: Container(
             height: 50,

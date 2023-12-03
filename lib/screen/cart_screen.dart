@@ -26,25 +26,19 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(CupertinoIcons.back),
+          child: const Icon(CupertinoIcons.back),
         ),
         elevation: 0,
-        title: const Center(
-          child: Text('Your Cart'),
-        ),
+        title: const Text('Your Cart'),
       ),
       body: BlocConsumer<CartBloc, CartState>(
-        // buildWhen:  (previous, current) {
-        //
-        //    return prev  is! CartActionState;
-        // },
         listener: (context, state) {},
         builder: (context, state) {
-          print('cart screen $state');
           if (auth == null) {
             return const Center(
               child: Text(
@@ -53,31 +47,25 @@ class _CartScreenState extends State<CartScreen> {
               ),
             );
           }
-          // if(state.loading == true){
-          //   return ;
-          // }
           return Stack(
             children: [
               Column(
                 children: [
                   Expanded(
                       child: ListView.separated(
-                        itemBuilder: (BuildContext context, int index) {
-                          return CartItemWidget(item: state.listItem[index]);
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Divider(
-                            color: Theme
-                                .of(context)
-                                .colorScheme
-                                .background,
-                          );
-                        },
-                        itemCount: state.listItem.length,
-                      )),
+                    itemBuilder: (BuildContext context, int index) {
+                      return CartItemWidget(item: state.listItem[index]);
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        color: Theme.of(context).colorScheme.background,
+                      );
+                    },
+                    itemCount: state.listItem.length,
+                  )),
                   Padding(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -90,8 +78,8 @@ class _CartScreenState extends State<CartScreen> {
                   )
                 ],
               ),
-              if(state.loading)
-              Center(child: CircularProgressIndicator())
+              if (state.loading)
+                const Center(child: CircularProgressIndicator())
             ],
           );
         },

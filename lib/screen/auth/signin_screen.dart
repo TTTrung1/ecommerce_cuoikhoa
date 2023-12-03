@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ecommerce_cuoikhoa/repository/auth_repository.dart';
 import 'package:ecommerce_cuoikhoa/screen/home.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController nameTEC = TextEditingController();
   TextEditingController passwordTEC = TextEditingController();
   User user = User(name: '', password: '');
+  AuthRepository authRepository = AuthRepository();
 
   void submitForm(BuildContext context) {
     final validate = Form.of(context).validate();
@@ -97,7 +99,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               vertical: 8.0, horizontal: 94.0),
                           transform: Matrix4.rotationZ(-8 * pi / 180)
                             ..translate(-10.0),
-                          // ..translate(-10.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.deepOrange.shade900,
@@ -265,6 +266,26 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10,),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Theme.of(context).colorScheme.secondaryContainer
+                        ),
+                        child: InkWell(onTap: (){
+                          context.read<AuthBloc>().add(GoogleSignInEvent());
+                        },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Or continue with Google',style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),),
+                              Image.asset('assets/google.png',height: 50,),
+
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
