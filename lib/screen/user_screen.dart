@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce_cuoikhoa/screen/auth/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,18 +36,16 @@ class _UserScreenState extends State<UserScreen> {
                   child: Image.asset('assets/Plink.png', width: 200),
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
+
               Center(
                 child: Text(auth!.email!,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: 16)),
               ),
-              const SizedBox(
-                height: 5,
-              ),
+              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -64,7 +63,7 @@ class _UserScreenState extends State<UserScreen> {
                   )
                 ],
               ),
-              const SizedBox(height: 10),
+              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text('language',
                         style: TextStyle(
@@ -91,22 +90,29 @@ class _UserScreenState extends State<UserScreen> {
                   },
                 )
               ]),
-              InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    'changePass',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 16),
-                  ).tr(),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ForgotPassword()));
-                },
+              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'changePass',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 16),
+                      ).tr(),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ForgotPassword()));
+                    },
+                  ),
+                  const CupertinoListTileChevron()
+                ],
               ),
               const Spacer(),
               BlocConsumer<AuthBloc, AuthState>(
