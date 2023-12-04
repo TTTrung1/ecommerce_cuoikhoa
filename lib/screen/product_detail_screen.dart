@@ -93,7 +93,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Text('${CupertinoIcons.star_fill} ${state.product.rating!.rate
+                              Text('Rating of ${state.product.rating!.rate
                                   .toString()} with ${state.product.rating!
                                   .count} votes',
                                   style: const TextStyle(

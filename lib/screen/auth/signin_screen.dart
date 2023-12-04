@@ -268,6 +268,11 @@ class _SignInScreenState extends State<SignInScreen> {
                           Divider(indent: MediaQuery.of(context).size.width*0.4,)
                         ],
                       ),
+                      const SizedBox(height: 5,),
+                      TextButton(onPressed: (){
+                        context.read<AuthBloc>().add(GuestLoginEvent());
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+                      }, child: const Text('Log in as guest')),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                         decoration: BoxDecoration(

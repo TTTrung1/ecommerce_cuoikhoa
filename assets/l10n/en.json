@@ -8,5 +8,6 @@
   "changePass":"Change password",
   "logOut":"Log out",
   "addToCart": "Add to cart",
-  "yourCart": "Your Cart"
+  "yourCart": "Your Cart",
+  "signIn": "Sign In"
 }

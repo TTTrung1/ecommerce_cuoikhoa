@@ -18,142 +18,232 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   final auth = FirebaseAuth.instance.currentUser;
+  final guest = FirebaseAuth.instance.currentUser?.isAnonymous;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Container(
-      height: MediaQuery.of(context).size.height * 0.9,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      child: BlocBuilder<ThemeBloc, ThemeMode>(
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset('assets/Plink.png', width: 200),
-                ),
-              ),
-              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
-
-              Center(
-                child: Text(auth!.email!,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 16)),
-              ),
-              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height * 0.9,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: BlocBuilder<ThemeBloc, ThemeMode>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('darkMode',
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset('assets/Plink.png', width: 200),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 0,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .onPrimary,
+                  ),
+                  Center(
+                    child: Text(guest == true ? 'Guest' :auth!.email!,
+                        style: TextStyle(
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .primary,
+                            fontSize: 16)),
+                  ),
+                  Divider(
+                    thickness: 0,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .onPrimary,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('darkMode',
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary,
                               fontSize: 16))
-                      .tr(),
-                  Switch(
-                    value: state == ThemeMode.dark,
-                    onChanged: (value) {
-                      BlocProvider.of<ThemeBloc>(context)
-                          .add(ThemeSwitchEvent());
+                          .tr(),
+                      Switch(
+                        value: state == ThemeMode.dark,
+                        onChanged: (value) {
+                          BlocProvider.of<ThemeBloc>(context)
+                              .add(ThemeSwitchEvent());
+                        },
+                      )
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .onPrimary,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('language',
+                            style: TextStyle(
+                                color: Theme
+                                    .of(context)
+                                    .colorScheme
+                                    .primary,
+                                fontSize: 16))
+                            .tr(),
+                        DropdownMenu(
+                          textStyle: TextStyle(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary,
+                              fontSize: 16),
+                          initialSelection:
+                          Localizations
+                              .localeOf(context)
+                              .languageCode,
+                          width: 150,
+                          dropdownMenuEntries: const [
+                            DropdownMenuEntry(value: 'en', label: 'English'),
+                            DropdownMenuEntry(value: 'vi', label: 'Tiếng Việt')
+                          ],
+                          onSelected: (value) {
+                            if (value!.isNotEmpty) {
+                              setState(() {
+                                context.setLocale(Locale(value));
+                              });
+                            }
+                          },
+                        )
+                      ]),
+                  Divider(
+                    thickness: 0,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .onPrimary,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            'changePass',
+                            style: TextStyle(
+                                color: Theme
+                                    .of(context)
+                                    .colorScheme
+                                    .primary,
+                                fontSize: 16),
+                          ).tr(),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (
+                                      context) => const ForgotPassword()));
+                        },
+                      ),
+                      const CupertinoListTileChevron()
+                    ],
+                  ),
+                  const Spacer(),
+                  guest == true
+                      ? InkWell(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignInScreen()),
+                                (route) => false);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .error,
+                            ),
+                            Text(
+                              'signIn',
+                              style: TextStyle(
+                                  color:
+                                  Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .error,
+                                  fontSize: 20),
+                            ).tr(),
+                          ],
+                        ),
+                      ),
+                  )
+                      : BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignInScreen()),
+                              (route) => false);
+                    },
+                    listenWhen: (previous, current) =>
+                    current is LogOutSuccessState,
+                    builder: (context, state) {
+                      return InkWell(
+                        onTap: () {
+                          context
+                              .read<AuthBloc>()
+                              .add(LogOutRequestedEvent());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.logout,
+                                color: Theme
+                                    .of(context)
+                                    .colorScheme
+                                    .error,
+                              ),
+                              Text(
+                                'logOut',
+                                style: TextStyle(
+                                    color:
+                                    Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .error,
+                                    fontSize: 20),
+                              ).tr(),
+                            ],
+                          ),
+                        ),
+                      );
                     },
                   )
                 ],
-              ),
-              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text('language',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 16))
-                    .tr(),
-                DropdownMenu(
-                  textStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 16),
-                  initialSelection:
-                      Localizations.localeOf(context).languageCode,
-                  width: 150,
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: 'en', label: 'English'),
-                    DropdownMenuEntry(value: 'vi', label: 'Tiếng Việt')
-                  ],
-                  onSelected: (value) {
-                    if (value!.isNotEmpty) {
-                      setState(() {
-                        context.setLocale(Locale(value));
-                      });
-                    }
-                  },
-                )
-              ]),
-              Divider(thickness: 0,color: Theme.of(context).colorScheme.onPrimary,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text(
-                        'changePass',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 16),
-                      ).tr(),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ForgotPassword()));
-                    },
-                  ),
-                  const CupertinoListTileChevron()
-                ],
-              ),
-              const Spacer(),
-              BlocConsumer<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) =>const SignInScreen()),
-                      (route) => false);
-                },
-                listenWhen: (previous, current) =>
-                    current is LogOutSuccessState,
-                builder: (context, state) {
-                  return InkWell(
-                    onTap: () {
-                      context.read<AuthBloc>().add(LogOutRequestedEvent());
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.logout,
-                            color: Theme.of(context).colorScheme.error,
-                          ),
-                          Text(
-                            'logOut',
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 20),
-                          ).tr(),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              )
-            ],
-          );
-        },
-      ),
-    ));
+              );
+            },
+          ),
+        ));
   }
 }

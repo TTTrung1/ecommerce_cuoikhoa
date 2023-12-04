@@ -54,6 +54,10 @@ class AuthRepository {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  Future<void> guestMode()async{
+    await _firebaseAuth.signInAnonymously();
+  }
+
   Future<void> resetPassword({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);

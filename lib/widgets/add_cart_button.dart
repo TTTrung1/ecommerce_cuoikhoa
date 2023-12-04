@@ -1,14 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce_cuoikhoa/model/cart_item.dart';
 import 'package:ecommerce_cuoikhoa/model/product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/cart/cart_bloc.dart';
 
 class AddToCart extends StatelessWidget {
-  const AddToCart({super.key, required this.product});
+  AddToCart({super.key, required this.product});
   final Product product;
+
+  final guest = FirebaseAuth.instance.currentUser?.isAnonymous;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class AddToCart extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: TextButton(
-              onPressed: () {
+              onPressed: guest == true ? null : () {
                 context.read<CartBloc>().add(CartAddedEvent(
                   item: CartItem(id: product.id,title: product.title,price: product.price,category: product.category,image: product.image,quantity: 1)
                 ));

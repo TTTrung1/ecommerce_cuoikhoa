@@ -15,7 +15,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final auth = FirebaseAuth.instance.currentUser;
+  final guest = FirebaseAuth.instance.currentUser?.isAnonymous;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _CartScreenState extends State<CartScreen> {
       body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (auth == null) {
+          if (guest == true) {
             return const Center(
               child: Text(
                 'Log in first to check out what\'s going on!',

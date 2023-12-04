@@ -20,16 +20,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogOutRequestedEvent>(_onLogOut);
     on<GoogleSignInEvent>(_onGoogleSignIn);
     on<ForgotPasswordEvent>(_onForgotPassword);
+    on<GuestLoginEvent>(_onGuest);
   }
 
   void _onInit(AuthStartedEvent event, Emitter<AuthState> emit) async {
-    print('auth');
     final bool auth = await isAuth();
     if (!auth) {
       emit(UnauthenticatedState());
     } else {
       emit(SignInSuccessState());
     }
+  }
+
+  void _onGuest(GuestLoginEvent event,Emitter<AuthState> emit)async{
+    await authRepository.guestMode();
+    emit(UnauthenticatedState());
   }
 
   Future<void> _onSignUp(SignUpRequestedEvent event,
