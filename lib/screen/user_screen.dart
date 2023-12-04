@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/auth/auth_bloc.dart';
 import '../bloc/theme/theme_bloc.dart';
+import 'forgot_password_screen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -37,24 +38,11 @@ class _UserScreenState extends State<UserScreen> {
               const SizedBox(
                 width: 10,
               ),
-              BlocConsumer<AuthBloc, AuthState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is SignInSuccessState) {
-                    return Center(
-                      child: Text(auth!.email!,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 16)),
-                    );
-                  }
-                  return Center(
-                    child: Text('Trung',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 16)),
-                  );
-                },
+              Center(
+                child: Text(auth!.email!,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 16)),
               ),
               const SizedBox(
                 height: 5,
@@ -113,17 +101,23 @@ class _UserScreenState extends State<UserScreen> {
                         fontSize: 16),
                   ).tr(),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgotPassword()));
+                },
               ),
               const Spacer(),
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      MaterialPageRoute(builder: (context) =>const SignInScreen()),
                       (route) => false);
                 },
-                listenWhen: (previous, current) => current is LogOutSuccessState,
+                listenWhen: (previous, current) =>
+                    current is LogOutSuccessState,
                 builder: (context, state) {
                   return InkWell(
                     onTap: () {

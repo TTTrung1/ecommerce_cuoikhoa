@@ -6,5 +6,7 @@
   "darkMode":"Nền tối",
   "language":"Ngôn ngữ",
   "changePass":"Đổi mật khẩu",
-  "logOut":"Đăng xuất"
+  "logOut":"Đăng xuất",
+  "addToCart": "Thêm vào giỏ",
+  "yourCart": "Giỏ hàng của bạn"
 }

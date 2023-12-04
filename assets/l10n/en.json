@@ -6,5 +6,7 @@
   "darkMode":"Dark mode",
   "language":"Language",
   "changePass":"Change password",
-  "logOut":"Log out"
+  "logOut":"Log out",
+  "addToCart": "Add to cart",
+  "yourCart": "Your Cart"
 }

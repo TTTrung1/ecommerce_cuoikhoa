@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/auth/auth_bloc.dart';
 import '../../model/user.dart';
+import '../forgot_password_screen.dart';
 import 'signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +23,6 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController passwordTEC = TextEditingController();
   User user = User(name: '', password: '');
   AuthRepository authRepository = AuthRepository();
-
-  void submitForm(BuildContext context) {
-    final validate = Form.of(context).validate();
-    if (!validate) {
-      return;
-    }
-    Form.of(context).save();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (ctx) => const MyHomePage()));
-  }
 
   @override
   void dispose() {
@@ -233,6 +224,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                                 ],
                                               ))),
                                 ),
+                                TextButton(onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                                }, child: const Text('Forgot password?')),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -266,7 +260,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 5,),
+                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Divider(indent: MediaQuery.of(context).size.width*0.4,),
+                          const Text('Or'),
+                          Divider(indent: MediaQuery.of(context).size.width*0.4,)
+                        ],
+                      ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                         decoration: BoxDecoration(
@@ -279,9 +280,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Or continue with Google',style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),),
+                              Text('Continue with Google',style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),),
                               Image.asset('assets/google.png',height: 50,),
-
                             ],
                           ),
                         ),

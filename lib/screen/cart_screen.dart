@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce_cuoikhoa/widgets/cart_item_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +35,7 @@ class _CartScreenState extends State<CartScreen> {
           child: const Icon(CupertinoIcons.back),
         ),
         elevation: 0,
-        title: const Text('Your Cart'),
+        title: const Text('yourCart').tr(),
       ),
       body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {},
@@ -72,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                         Expanded(
                             child: ElevatedButton(
                                 onPressed: () {},
-                                child: Text('Total cost: ${state.totalCost}'))),
+                                child: Text('\$: ${state.totalCost.toStringAsFixed(2)}'))),
                       ],
                     ),
                   )

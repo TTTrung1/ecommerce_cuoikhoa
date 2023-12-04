@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce_cuoikhoa/model/cart_item.dart';
 import 'package:ecommerce_cuoikhoa/model/product.dart';
 import 'package:flutter/material.dart';
@@ -42,11 +43,11 @@ class AddToCart extends StatelessWidget {
                 ));
                 Navigator.of(context).pop();
 
-              }, child: const Text('Add to cart',
+              }, child: const Text('addToCart',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
-                )),
+                )).tr(),
             ),
           ),
         );

@@ -20,11 +20,21 @@ class SignUpFailState extends AuthActionState {
 
 class UnauthenticatedState extends AuthState {}
 
-class SignInFailState extends AuthState {
+class SignInFailState extends AuthActionState {
   final String message;
   SignInFailState({required this.message});
 }
 
 class SignInSuccessState extends AuthActionState {}
+
+class ForgotPasswordSuccessState extends AuthActionState{
+  final String message;
+  ForgotPasswordSuccessState(this.message);
+}
+
+class ForgotPasswordFailState extends AuthActionState{
+  final String message;
+  ForgotPasswordFailState(this.message);
+}
 
 class LogOutSuccessState extends AuthActionState {}

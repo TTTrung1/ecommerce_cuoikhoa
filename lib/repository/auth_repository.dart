@@ -4,55 +4,61 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
 
-  Future<User?> signUp({required String email, required String password}) async {
+  Future<User?> signUp(
+      {required String email, required String password}) async {
     try {
-      UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
 
       return user.user;
-    }
-    on FirebaseAuthException catch(e){
-      if(e.code == 'weak-password'){
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
         throw Exception('Weak password');
-      }
-      else if(e.code == 'email-already-in-use'){
+      } else if (e.code == 'email-already-in-use') {
         throw Exception('Email has already been used');
       }
-    }
-    catch (e) {
+    } catch (e) {
       throw Exception(e.toString());
     }
   }
-  Future<User?> signIn({required String email, required String password}) async {
+
+  Future<User?> signIn(
+      {required String email, required String password}) async {
     try {
-      UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return user.user;
-    }
-    on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
-    }
-    catch (e) {
+    } catch (e) {
       throw Exception(e.toString());
     }
   }
-  void logOut() async{
-   await _firebaseAuth.signOut();
-   await GoogleSignIn().signOut();
+
+  void logOut() async {
+    await _firebaseAuth.signOut();
+    await GoogleSignIn().signOut();
   }
+
   Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
-    await googleUser?.authentication;
+        await googleUser?.authentication;
 
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
 
-    // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
