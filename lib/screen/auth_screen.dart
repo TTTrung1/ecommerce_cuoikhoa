@@ -11,7 +11,7 @@ class AuthScreen extends StatelessWidget {
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
+          if (snapshot.hasData && snapshot.data != null && snapshot.data?.isAnonymous == false) {
             return const MyHomePage();
           }
           return const SignInScreen();

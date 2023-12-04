@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: Theme.of(context).textTheme.displayLarge,
               ).tr(),
               IconButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  CartScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  const CartScreen()));
               }, icon: const Icon(CupertinoIcons.cart))
             ],
           ),
@@ -56,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 final List<Product> listAllProducts = state.listAllProducts;
                 return CarouselSliderItem(listProducts: listAllProducts);
               } else {
-                print('home screen $state');
                 return Container();
               }
             },

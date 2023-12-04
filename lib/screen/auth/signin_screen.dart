@@ -225,7 +225,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                               ))),
                                 ),
                                 TextButton(onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
                                 }, child: const Text('Forgot password?')),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

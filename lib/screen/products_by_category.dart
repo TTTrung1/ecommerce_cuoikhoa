@@ -1,4 +1,4 @@
-import 'package:ecommerce_cuoikhoa/widgets/preview_item.dart';
+import 'package:ecommerce_cuoikhoa/widgets/product_by_category.dart';
 import 'package:flutter/material.dart';
 
 import '../model/product.dart';
@@ -35,7 +35,7 @@ class ProductsByCategory extends StatelessWidget {
                             isScrollControlled: true,
                             context: context,
                             builder: (context) =>
-                                PreviewItem(product: products[index]));
+                                ProductByCategory(product: products[index]));
                       },
                       child: Column(
                         mainAxisSize: MainAxisSize.min,

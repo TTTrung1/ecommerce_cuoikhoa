@@ -18,7 +18,6 @@ class AddToCart extends StatelessWidget {
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
         if(state.clicked == true){
-          print('listener: $state');
           ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
           msg.showSnackBar(const SnackBar(
             content: Text('Added to cart'),

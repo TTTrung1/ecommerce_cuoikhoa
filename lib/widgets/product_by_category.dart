@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../model/product.dart';
 
-class PreviewItem extends StatelessWidget {
-  const PreviewItem({super.key, required this.product});
+class ProductByCategory extends StatelessWidget {
+  const ProductByCategory({super.key, required this.product});
 
   final Product product;
 

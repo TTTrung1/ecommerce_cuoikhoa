@@ -32,6 +32,6 @@ class CarouselSliderItem extends StatelessWidget {
             autoPlay: true,
             autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
             autoPlayAnimationDuration: const Duration(seconds: 2)));
-    ;
+
   }
 }

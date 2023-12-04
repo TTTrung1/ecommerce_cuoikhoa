@@ -6,7 +6,7 @@ import '../model/cart_item.dart';
 class CartRepository {
   final _auth = FirebaseAuth.instance.currentUser;
 
-  List<CartItem> _items = [];
+  final List<CartItem> _items = [];
 
   List<CartItem> get listItem {
     return [..._items];

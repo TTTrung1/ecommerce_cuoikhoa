@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 import '../../model/cart_item.dart';
 import '../../repository/cart_repository.dart';
@@ -23,7 +22,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Future<void> _onStart(CartStartedEvent event, Emitter<CartState> emit) async {
-    print('on cart start');
     emit(state.copyWith(loading: true));
     try {
       await cartRepository.fetchFromFirebase();
@@ -47,7 +45,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final listItem = cartRepository.listItem;
       emit(state.copyWith(
           listItem: listItem, totalCost: totalCost, loading: false,clicked: true));
-      print('state in bloc: $state');
       emit(state.copyWith(clicked: false));
     } catch (e) {
       emit(state.copyWith(loading: false));

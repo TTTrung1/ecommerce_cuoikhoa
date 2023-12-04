@@ -17,11 +17,9 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchTEC = TextEditingController();
-  List<Product> listP = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SearchBloc().add(SearchStarted());
   }
@@ -48,7 +46,6 @@ class _SearchScreenState extends State<SearchScreen> {
               },
               onChanged: (value) {
                 if (value.isEmpty) {
-                  print('empty');
                   context.read<SearchBloc>().add(SearchCleared());
                 } else {
                   context.read<SearchBloc>().add(SearchEntered(value));

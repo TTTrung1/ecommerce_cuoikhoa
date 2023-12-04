@@ -19,18 +19,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void _onStart(SearchEvent event, Emitter<SearchState> emit) {
-    print('started');
     emit(SearchInitial());
     emit(SearchSuccess([]));
   }
 
   Future<void> _onEntered(SearchEntered event, Emitter<SearchState> emit) async{
-    print('entered');
     emit(SearchLoading());
     final restClient = RestClient(Dio(BaseOptions()));
     final List<Product> products = await restClient.getProducts();
     try {
-      // await Future.delayed(const Duration(seconds: 1));
       emit(SearchSuccess(products
           .where((element) =>
               element.title!.toLowerCase().contains(event.query.toLowerCase()))

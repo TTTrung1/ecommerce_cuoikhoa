@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               listener: (context, state) {
                 if (state is SignUpSuccessState) {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()));
+                      MaterialPageRoute(builder: (context) => const SignInScreen()));
                 }
                 if (state is SignUpFailState) {
                   showDialog(
