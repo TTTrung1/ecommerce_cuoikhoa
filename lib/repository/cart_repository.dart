@@ -38,32 +38,84 @@ class CartRepository {
     await userProductCollection.doc('items').set({'products': cartItemList});
   }
 
+  // Future<void> fetchFromFirebase() async {
+  //   final uid = _auth?.uid;
+  //
+  //   CollectionReference userProductCollection = FirebaseFirestore.instance
+  //       .collection('cart')
+  //       .doc(uid)
+  //       .collection('products');
+  //
+  //   final DocumentSnapshot snapshot =
+  //       await userProductCollection.doc('items').get();
+  //   if (snapshot.exists) {
+  //     final data = snapshot['products'];
+  //     if (data != null) {
+  //       _items.clear();
+  //       data.forEach((element) {
+  //         _items.add(CartItem(
+  //             id: element['id'],
+  //             title: element['title'],
+  //             price: element['price'],
+  //             category: element['category'],
+  //             image: element['image'],
+  //             quantity: element['quantity']));
+  //       });
+  //       print('Items loaded successfully: $_items');
+  //     } else {
+  //       print('Products field is null. Creating an empty array.');
+  //       await userProductCollection.doc('items').set({'products': []});
+  //     }
+  //   } else {
+  //     print('Items document does not exist. Creating it with an empty array.');
+  //     await userProductCollection.doc('items').set({'products': []});
+  //   }
+  // }
   Future<void> fetchFromFirebase() async {
-    final uid = _auth?.uid;
+    try {
+      final uid = _auth?.uid;
 
-    CollectionReference userProductCollection = FirebaseFirestore.instance
-        .collection('cart')
-        .doc(uid)
-        .collection('products');
+      CollectionReference userProductCollection = FirebaseFirestore.instance
+          .collection('cart')
+          .doc(uid)
+          .collection('products');
 
-    final DocumentSnapshot snapshot =
-        await userProductCollection.doc('items').get();
-    if (snapshot.exists) {
-      final data = snapshot['products'];
-      _items.clear();
-      data.forEach((element) {
-        _items.add(CartItem(
-            id: element['id'],
-            title: element['title'],
-            price: element['price'],
-            category: element['category'],
-            image: element['image'],
-            quantity: element['quantity']));
-      });
+      final DocumentSnapshot snapshot =
+      await userProductCollection.doc('items').get();
+
+      if (snapshot.exists) {
+        final data = snapshot.data() as Map<String,dynamic>;
+        if (data != null && data['products'] != null) {
+          final productsData = data['products'];
+          print('Data from Firestore: $productsData');
+          if (productsData != null) {
+            _items.clear();
+            (productsData as List<dynamic>).forEach((element) {
+              _items.add(CartItem(
+                id: element['id'],
+                title: element['title'],
+                price: element['price'],
+                category: element['category'],
+                image: element['image'],
+                quantity: element['quantity'],
+              ));
+            });
+            print('Items loaded successfully: $_items');
+          } else {
+            print('Products field is null. Creating an empty array.');
+            await userProductCollection.doc('items').set({'products': []});
+          }
+        } else {
+          print('Products field does not exist in the DocumentSnapshot.');
+        }
+      } else {
+        print('Items document does not exist. Creating it with an empty array.');
+        await userProductCollection.doc('items').set({'products': []});
+      }
+    } catch (e, stackTrace) {
+      print('Error fetching data: $e\n$stackTrace');
     }
-  }
-
-  Future<double> totalCost() async {
+  }  Future<double> totalCost() async {
     double amount = 0;
     final uid = _auth?.uid;
 

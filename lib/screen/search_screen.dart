@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce_cuoikhoa/screen/product_detail_screen.dart';
 import 'package:ecommerce_cuoikhoa/widgets/search_item.dart';
@@ -24,6 +26,17 @@ class _SearchScreenState extends State<SearchScreen> {
     SearchBloc().add(SearchStarted());
   }
 
+  Timer? searchOnStoppedTyping;
+
+  _onChangeHandler(String value) {
+    const duration = Duration(seconds:2); // set the duration that you want call search() after that.
+    if (searchOnStoppedTyping != null || value.isEmpty) {
+      searchOnStoppedTyping?.cancel(); // clear timer
+      BlocProvider.of<SearchBloc>(context).add(SearchCleared());
+    }
+    searchOnStoppedTyping = Timer(duration, () => BlocProvider.of<SearchBloc>(context).add(SearchEntered(value)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,7 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 if (value.isEmpty) {
                   context.read<SearchBloc>().add(SearchCleared());
                 } else {
-                  context.read<SearchBloc>().add(SearchEntered(value));
+                  _onChangeHandler(value);
                 }
               },
               controller: searchTEC,

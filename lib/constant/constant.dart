@@ -1,27 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TextTheme textTheme = TextTheme(
-//   displayLarge: TextStyle(
-//     fontSize: 30,
-//     fontWeight: FontWeight.w500,
-//   ),
-//   displayMedium: TextStyle(
-//     fontSize: 20,
-//     fontWeight: FontWeight.w800,
-//   ),
-//   displaySmall: TextStyle(
-//     fontSize: 18,
-//     fontWeight: FontWeight.w400,
-//   ),
-//   headlineMedium: TextStyle(
-//     fontSize: 16,
-//     fontWeight: FontWeight.w400,
-//   ),
-//   headlineSmall: TextStyle(
-//     fontWeight: FontWeight.w400,
-//   ),
-// );
-
 ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     colorScheme: lightColorScheme,
@@ -31,14 +9,16 @@ ThemeData lightTheme = ThemeData(
         fontWeight: FontWeight.w500,
       ),
       displayMedium: TextStyle(
+        color: Colors.black,
         fontSize: 20,
-        fontWeight: FontWeight.w800,
       ),
       displaySmall: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w400,
       ),
       headlineMedium: TextStyle(
+        color: Colors.black,
+
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),
@@ -54,14 +34,16 @@ ThemeData darkTheme = ThemeData(
         fontWeight: FontWeight.w500,
       ),
       displayMedium: TextStyle(
+        color: Colors.white,
         fontSize: 20,
-        fontWeight: FontWeight.w800,
       ),
       displaySmall: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w400,
       ),
       headlineMedium: TextStyle(
+        color: Colors.white,
+
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),
@@ -109,7 +91,7 @@ const lightColorScheme = ColorScheme(
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Colors.purple,
-  onPrimary: Color(0xFF381E72),
+  onPrimary: Color(0xFFAF9BE0),
   primaryContainer: Color(0xFF4F378B),
   onPrimaryContainer: Color(0xFFEADDFF),
   secondary: Color(0xFFCCC2DC),

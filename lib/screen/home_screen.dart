@@ -18,12 +18,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   HomeBloc().add(HomeStarted());
-  // }
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Container(
@@ -38,9 +32,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 'appTitle',
                 style: Theme.of(context).textTheme.displayLarge,
               ).tr(),
-              IconButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  const CartScreen()));
-              }, icon: const Icon(CupertinoIcons.cart))
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CartScreen()));
+                  },
+                  icon: const Icon(CupertinoIcons.cart))
             ],
           ),
           const SizedBox(
@@ -85,10 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Text(
                                       categories[index].toUpperCase(),
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
                                     ),
                                     TextButton(
                                         onPressed: () {
@@ -96,9 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ProductsByCategory(products: listProductByCat!,)));
+                                                      ProductsByCategory(
+                                                        products:
+                                                            listProductByCat!,
+                                                      )));
                                         },
-                                        child: const Text('showAll').tr())
+                                        child: Text(
+                                          'showAll',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium,
+                                        ).tr())
                                   ],
                                 ),
                               ),
@@ -108,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         separatorBuilder: (ctx, i) => Divider(
-                          color: Theme.of(context).colorScheme.background,
+                              color: Theme.of(context).colorScheme.background,
                               height: 10,
                             ),
                         itemCount: categories.length),

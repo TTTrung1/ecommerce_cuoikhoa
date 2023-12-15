@@ -72,8 +72,11 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         Expanded(
                             child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Colors.cyan)
+                                ),
                                 onPressed: () {},
-                                child: Text('\$: ${state.totalCost.toStringAsFixed(2)}'))),
+                                child: Text('\$: ${state.totalCost.toStringAsFixed(2)}',style: Theme.of(context).textTheme.headlineMedium,))),
                       ],
                     ),
                   )
